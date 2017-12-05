@@ -33,6 +33,8 @@ class Downloader(object):
             async with session.get(url) as resp:
                 self._htmls.append(await resp.text())
 
+                # self._htmls.append(await resp.read())
+
     def download(self):
         loop = asyncio.get_event_loop()
         tasks = [self.download_single_page(url) for url in self.urls]
@@ -42,3 +44,7 @@ class Downloader(object):
     def htmls(self):
         self.download()
         return self._htmls
+
+
+if __name__ == '__main__':
+    downloader = Downloader('')

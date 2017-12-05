@@ -30,4 +30,4 @@ class RewriteSpiderError(Exception):
         Exception.__init__(self)
 
     def __str__(self):
-        return repr(f'The spider `{self.cls_name}` does not has func `gets`.')
+        return repr('The spider `{self.cls_name}` does not has func `gets`.')

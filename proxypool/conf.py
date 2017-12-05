@@ -1,5 +1,5 @@
 # Redis Host
-HOST = 'localhost'
+HOST = "report01.wmcloud-dev.com"
 # Redis PORT
 PORT = 6379
 

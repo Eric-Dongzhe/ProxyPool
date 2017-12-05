@@ -6,7 +6,6 @@ __all__ = ['app']
 app = Flask(__name__)
 
 
-
 def get_conn():
     """获取 Redis 连接
     :return: RedisOperator

@@ -3,6 +3,13 @@
 `SpiderMeta`类，并重写`gets`方法，`gets`
 方法要求返回 ip:port 形式的代理。
 """
+import logging
+import re
+
+import requests
+
+from conf.settings import settings as psettings
+from conf.settings import A3_LIST
 
 from .errors import RewriteSpiderError
 from .utils import get_page
@@ -51,6 +58,64 @@ class SpiderMeta(type):
         SpiderMeta.spiders.append(type.__new__(cls, *args, **kwargs))
         return type.__new__(cls, *args, **kwargs)
 
+
+# def get_page(url):
+#     html = ''
+#     try:
+#         # API调用限速
+#         # 调用API
+#         html = requests.get(url, timeout=300).content
+#     except Exception as e:
+#         logging.error('Exception in ADSLProxyManager.__api__call():{}'.format(str(e)))
+#     return html.decode()
+
+
+# class ProxyKunPengSpider(metaclass=SpiderMeta):
+#
+#     current_ip_url = '{}/un-ip/?token={}&username={}'
+#     redial_ip_url = '{}/re-dial/?token={}&username={}'
+#
+#     def __api_call(self, url):
+#         """调用API返回内容
+#         """
+#         html = ''
+#         try:
+#             # API调用限速
+#             # 调用API
+#             html = get_page(url)
+#         except Exception as e:
+#             # common.logger.error('Exception in ADSLProxyManager.__api__call():{}'.format(str(e)))
+#             pass
+#         return html
+#
+#     def get_one(self, a3):
+#         username, api_url, token = a3.split(',')
+#         url = self.current_ip_url.format(api_url, token, username)
+#         # print(url)
+#         ip = None
+#         while True:  # 死循环，直到调用成功
+#             html = self.__api_call(url)
+#             if html:
+#                 print(html)
+#                 m = re.compile(r'"ip"\s*:\s*"([^\"]+)"').search(html)
+#                 if m:
+#                     ip = m.groups()[0]
+#                 return ip
+#
+#     def gets(self, page_total=None):
+#         # PROXY_USERNAME = 'kunzhipeng'
+#         # PROXY_PASSWORD = 'kunzhipeng2013'
+#         # PROXY_PORT = '8888'
+#         PROXY_USERNAME = psettings['PROXY_USERNAME']
+#         PROXY_PASSWORD = psettings['PROXY_PASSWORD']
+#         PROXY_PORT = psettings['PROXY_PORT']
+#
+#         ans = []
+#         for a3 in A3_LIST:
+#             ip = self.get_one(a3)
+#             ip = '{}:{}@{}:{}'.format(PROXY_USERNAME, PROXY_PASSWORD, ip, PROXY_PORT)
+#             ans.append(ip)
+#             return ans
 
 class Proxy360Spider(metaclass=SpiderMeta):
     start_url = 'http://www.proxy360.cn/default.aspx'
